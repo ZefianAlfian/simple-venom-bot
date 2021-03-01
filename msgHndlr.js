@@ -1,5 +1,7 @@
 const fs = require("fs");
 
+const { msgFilter } = require(process.cwd() + '/msgFilter')
+
 const availableCommands = new Set();
 (async function () {
   fs.readdir("./app/commands", (e, files) => {
@@ -47,16 +49,19 @@ module.exports = msgHandler = async (client, message) => {
     exports.pushname = pushname
 
     if (availableCommands.has(command)) {
-        const talkedRecently = new Set();
-        if (talkedRecently.has(sender.id)) return client.reply(from, "Tunggu 10 detik untuk menggunakan command lagi !!", message.id)
+        if (msgFilter.isFiltered(sender.id)) return client.reply(from, "Tunggu 10 detik untuk menggunakan command lagi !!", message.id)
+        msgFilter.addFilter(sender.id)
+
+        //const talkedRecently = new Set();
+        //if (talkedRecently.has(sender.id)) return client.reply(from, "Tunggu 10 detik untuk menggunakan command lagi !!", message.id)
       require(`./app/commands/${command}`).run(client, message, args, from, pushname);
       console.log(availableCommands);
       console.log(`${pushname} atau ${sender.id.split('@c.us')} Menggunakan Command ${command}`);
-      talkedRecently.add(sender.id)
-      setTimeout(function(){
+      //talkedRecently.add(sender.id)
+      /*setTimeout(function(){
           talkedRecently.delete(sender.id)
-      }, 10000)
-      console.log(talkedRecently)
+      }, 10000)*/
+      console.log(msgFilter)
     }
     // if (!command) return;
     // switch (command) {
