@@ -9,6 +9,8 @@
   "author": "ZefianAlfian",
   "license": "ISC",
   "dependencies": {
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
     "venom-bot": "^3.0.6"
   },
   "devDependencies": {},

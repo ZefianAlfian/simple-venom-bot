@@ -2,9 +2,15 @@
 // import { create, Whatsapp } from 'venom-bot';
 const { create, Client } = require("venom-bot");
 const msgHandler = require("./msgHndlr");
-const options = require('./options')
+const options = require("./options");
+const chalk = require("chalk");
+const fs = require("fs");
+const color = (text, color) => {
+  return !color ? chalk.green(text) : chalk.keyword(color)(text);
+};
+
 const start = async (client = new Client()) => {
-  console.log("[SERVER] Server Started!");
+  await console.log("[SERVER] Server Started!");
   // Force it to keep the current session
   client.onStateChange((state) => {
     console.log("[Client State]", state);
@@ -15,9 +21,8 @@ const start = async (client = new Client()) => {
     msgHandler(client, message);
   });
 
-
   client.onIncomingCall(async (call) => {
-      console.log(call)
+    console.log(call);
     await client
       .sendText(
         call.peerJid,
