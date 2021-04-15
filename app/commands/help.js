@@ -17,7 +17,7 @@ exports.run = (client, message, args, from, pushname) => {
             const commandName = args[0];
             const { name, description, usage } = require(`./${commandName}.js`).help;
             client.reply(from, `*${name}*\n\nDescription: ${description}\nUsage: \`\`\`${usage}\`\`\``, message.id)
-        };
+        }
     })
 }
 
